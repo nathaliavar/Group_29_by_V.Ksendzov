@@ -182,14 +182,16 @@ id отдела, из которого будут переноситься со�
 */
 function moveEmployees(deleteDepartmentId, insertDepartmentId){
   const employeeEnterprise = enterprises.find((enterprise)=>enterprise.departments.find(({id})=>id===deleteDepartmentId))
-  const deleteDepartment = employeeEnterprise.departments.find(({id})=> id===deleteDepartmentId)
-  const insertDepartment = employeeEnterprise.departments.find(({id})=> id===insertDepartmentId)
+  const deleteDepartment = employeeEnterprise?.departments.find(({id})=> id===deleteDepartmentId)
+  const insertDepartment = employeeEnterprise?.departments.find(({id})=> id===insertDepartmentId)
+  
   if (insertDepartment && deleteDepartment){
   insertDepartment.employees_count += deleteDepartment.employees_count 
-  deleteDepartment.employees_count = 0}
+  deleteDepartment.employees_count = 0
+  }
 
-  // return enterprises
-  console.log(employeeEnterprise)
+  return enterprises
 }
+
 moveEmployees(3, 4)
 console.log(JSON.stringify(enterprises))
