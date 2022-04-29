@@ -68,6 +68,7 @@ const enterprises = [
 - Отдел охраны труда (5 сотрудников)
 Предприятие 3 (нет сотрудников)
 - Отдел аналитики (нет сотрудников)*/
+
 function general_info(data){
   let structureOfCompanies = ''
   for (let i=0; i<data.length; i++){
@@ -81,10 +82,10 @@ function general_info(data){
     }
     structureOfCompanies += ` (${countOfEmploees} сотрудников) \n` + departments
   }
+  
   console.log(structureOfCompanies)
 }
 general_info(enterprises)
-
 
 /*
 2. Написать функцию, которая будет принимать 1 аргумент (id отдела или название отдела и возвращать название предприятия, к которому относится).
@@ -92,8 +93,8 @@ general_info(enterprises)
 function getEnterpriseName(deparmentLocator){
   return enterprises.find((enterprise)=>enterprise.departments.find(({id, name})=> id === deparmentLocator || name === deparmentLocator))?.name || 'Предприятия не существует'
 }
-console.log(getEnterpriseName('Отдел маркетинга'))
 
+console.log(getEnterpriseName('Отдел маркетинга'))
 
 /*
 3. Написать функцию, которая будет добавлять предприятие. В качестве аргумента принимает название предприятия
@@ -105,8 +106,9 @@ function addEnterprise(newEnterprise){
     id: lastId[lastId.length-1].id + 1,
     name: newEnterprise,
     departments: []
-})
-return enterprises
+  })
+  
+  return enterprises
 }
 
 console.log(addEnterprise(`Звезда`))
@@ -122,6 +124,7 @@ function addDepartment(enterpriseId, departmentName){
     id: lastId,
     name: departmentName,
   })
+  
   return enterprises
 }
 
@@ -133,6 +136,7 @@ console.log(addDepartment(1, "ОТК"))
 function editEnterprise(enterpriseId, newEnterpriseName){
   const enterpriseToChange = enterprises.find((enterprise)=> enterprise.id === enterpriseId)
   enterpriseToChange.name = newEnterpriseName
+  
   return enterprises
 }
 
@@ -145,8 +149,10 @@ function editDepartment(departmentId, newDepartmentName){
   const enterpriseForDepartment = enterprises.find((enterprise)=>enterprise.departments.find(({id})=>id===departmentId))
   const departmentToChange = enterpriseForDepartment.departments.find((department)=>departmentId===department.id)
   departmentToChange.name = newDepartmentName
+  
   return enterprises
 }
+
 editDepartment(10, 'GTV')
 console.log(JSON.stringify(enterprises))
 
@@ -156,6 +162,7 @@ console.log(JSON.stringify(enterprises))
 function deleteEnterprise(enterpriseId){
   const enterpriseToDelite = enterprises.find((enterprise)=> enterprise.id == enterpriseId)
   enterprises.splice(enterprises.indexOf(enterpriseToDelite), 1)
+  
   return enterprises
 }
 
@@ -168,13 +175,12 @@ function deleteDepartment(departmentId){
   const enterpriseForDepartment = enterprises.find((enterprise)=>enterprise.departments.find(({id})=>id===departmentId))
   const departmentToDelite = enterpriseForDepartment.departments.find((department)=>departmentId===department.id)
   enterpriseForDepartment.departments.splice(enterpriseForDepartment.departments.indexOf(departmentToDelite), 1)
+  
   return enterprises
 }
 
-
 deleteDepartment(2)
 console.log(JSON.stringify(enterprises))
-
 
 /* 
 9. Написать функцию для переноса сотрудников между отделами одного предприятия. В качестве аргумента принимает два значения: 
